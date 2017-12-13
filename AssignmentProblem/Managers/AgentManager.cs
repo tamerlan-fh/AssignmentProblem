@@ -1,6 +1,7 @@
 ﻿using AssignmentProblem.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,21 +23,22 @@ namespace AssignmentProblem.Managers
             }
         }
         private static AgentManager instance;
-        private AgentManager() { }
-
-        public Agent[] GetAgents()
+        private AgentManager()
         {
-            return null;
+            Agents = new ObservableCollection<Agent>();
         }
+
+        public ObservableCollection<Agent> Agents { get; private set; }
 
         public void AddAgent(Agent agent)
         {
-
+            if(!Agents.Contains(agent))
+                Agents.Add(agent);
         }
 
         public void RemoveAgent(Agent agent)
         {
-
+            Agents.Remove(agent);
         }
     }
 }

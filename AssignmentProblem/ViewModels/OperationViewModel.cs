@@ -14,5 +14,6 @@ namespace AssignmentProblem.ViewModels
         {
             this.model = operation;
         }
+
     }
 }
