@@ -15,18 +15,24 @@ namespace AssignmentProblem.ViewModels
         public MainWindowViewModel()
         {
             AgentsEditCommand = new RelayCommand(p => AgentsEdit());
-            Operations = new ObservableCollection<OperationViewModel>();
-      //      AgentManager.Instance.ServerStart();
+            OperationsEditCommand = new RelayCommand(p => OperationsEdit());
         }
 
         public RelayCommand AgentsEditCommand { get; private set; }
+        public RelayCommand OperationsEditCommand { get; private set; }
 
         public ObservableCollection<AgentViewModel> Agents { get { return AgentManager.Instance.Agents; } }
-        public ObservableCollection<OperationViewModel> Operations { get; private set; }
+        public ObservableCollection<OperationViewModel> Operations { get { return OperationManager.Instance.Operations; } }
 
         private void AgentsEdit()
         {
             var window = new AgentСonfigurator();
+            window.Show();
+        }
+
+        private void OperationsEdit()
+        {
+            var window = new OperationConfigurator();
             window.Show();
         }
     }

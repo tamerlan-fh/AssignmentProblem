@@ -1,4 +1,4 @@
-﻿using AssignmentProblem.Models;
+﻿using AssignmentProblem.Library;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +15,8 @@ namespace AssignmentProblem.ViewModels
             this.model = operation;
         }
 
+        public int ID { get { return model.ID; } }
+
+        public double Complexity { get { return model.Complexity; } }
     }
 }

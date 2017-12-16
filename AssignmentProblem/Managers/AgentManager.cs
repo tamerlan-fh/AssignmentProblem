@@ -45,6 +45,8 @@ namespace AssignmentProblem.Managers
 
         public int Port { get; private set; }
 
+        public string Address { get { return $"{Host}:{Port}"; } }
+
         public ObservableCollection<AgentViewModel> Agents { get; private set; }
 
         public int EnabledAgentsCount { get { return Agents.Where(x => x.IsEnabled).Count(); } }
@@ -81,7 +83,7 @@ namespace AssignmentProblem.Managers
 
                         AddAgent(agent, client);
                     }
-                    catch(Exception ex)
+                    catch
                     {
                         continue;
                     }

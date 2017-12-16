@@ -18,6 +18,7 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
+        <TextBox Grid.Row="0" Text="{Binding Address, Mode=OneWay, StringFormat={} адрес сервера {0}}" IsReadOnly="True" BorderThickness="0" TextAlignment="Center" />
         <ListView Grid.Row="1" ItemsSource="{Binding Agents}">
             <ListView.View>
                 <GridView>
@@ -35,6 +36,6 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Grid.Row="2" Content="применить" Margin="0,5" Click="ButtonClick"/>
+        <Button Grid.Row="2" Content="закрыть" Margin="0,5" Click="ButtonClick"/>
     </Grid>
 </Window>

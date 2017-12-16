@@ -6,7 +6,7 @@ namespace AssignmentProblem.Library
     /// <summary>
     /// задача
     /// </summary>
-    class Operation
+    public class Operation
     {
         /// <summary>
         /// уникальный идентификатор задачи
@@ -19,6 +19,12 @@ namespace AssignmentProblem.Library
         /// </summary>
         [JsonProperty("complexity")]
         public double Complexity { get; set; }
+
+        /// <summary>
+        /// тело задачи в байтовом представлении
+        /// </summary>
+        [JsonProperty("content")]
+        public byte[] Content { get; set; }
 
         /// <summary>
         /// метод расчета времени, затраченного на выполнение задачи

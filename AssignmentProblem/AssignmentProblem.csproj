@@ -85,8 +85,12 @@
     <Compile Include="ViewModels\AgentСonfiguratorViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\OperationConfiguratorViewModel.cs" />
     <Compile Include="ViewModels\OperationViewModel.cs" />
     <Compile Include="ViewModels\RelayCommand.cs" />
+    <Compile Include="Views\OperationConfigurator.xaml.cs">
+      <DependentUpon>OperationConfigurator.xaml</DependentUpon>
+    </Compile>
     <Page Include="Views\AgentСonfigurator.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -106,6 +110,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\OperationConfigurator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
