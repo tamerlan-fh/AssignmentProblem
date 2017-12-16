@@ -13,5 +13,10 @@ namespace AssignmentProblem.Client
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnExit(ExitEventArgs e)
+        {
+            AgentClient.Instance.Dispose();
+            base.OnExit(e);
+        }
     }
 }

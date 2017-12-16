@@ -6,60 +6,35 @@
         xmlns:local="clr-namespace:AssignmentProblem.Views"
         xmlns:vm="clr-namespace:AssignmentProblem.ViewModels"
         mc:Ignorable="d"
-        Title="Исполнители" Height="300" Width="300" Icon="/AssignmentProblem;component/Icons/agent_ico_64.png" WindowStartupLocation="CenterScreen">
+        Title="Исполнители" Height="640" Width="420" Icon="/AssignmentProblem;component/Icons/agent_ico_64.png" WindowStartupLocation="CenterScreen">
     <Window.DataContext>
         <vm:AgentСonfiguratorViewModel/>
     </Window.DataContext>
 
     <Grid Margin="10">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
 
-        <GridSplitter Grid.Column="1" ShowsPreview="False" Width="5" HorizontalAlignment="Center" VerticalAlignment="Stretch" Background="Transparent" />
-
-        <ListBox Grid.Column="0"/>
-
-        <Grid Grid.Column="2">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition />
-                <RowDefinition Height="auto"/>
-            </Grid.RowDefinitions>
-
-            <StackPanel Grid.Row="0">
-                <Button Content="добавить" Margin="2"/>
-                <Button Content="удалить" Margin="2"/>
-            </StackPanel>
-
-            <Grid Grid.Row="1" VerticalAlignment="Center">
-                <Grid.Resources>
-                    <DataTemplate DataType="{x:Type ValidationError}">
-                        <TextBox FontStyle="Italic" Foreground="Red" HorizontalAlignment="Right" Margin="0,1" Text="{Binding Path=ErrorContent}" TextWrapping="Wrap" BorderThickness="0"/>
-                    </DataTemplate>
-                </Grid.Resources>
-                
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                </Grid.RowDefinitions>
-                
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-
-                <TextBox Text="название" Grid.Column="0" Grid.Row="0" TextAlignment="Right" BorderThickness="0" />
-                <TextBox Name="name_box" Text="{Binding Name, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="0" IsReadOnly="{Binding IsAddMode, UpdateSourceTrigger=PropertyChanged}" BorderThickness="0"/>
-                <ContentPresenter Grid.ColumnSpan="2" Grid.Row="1" Content="{Binding ElementName=name_box, Path=(Validation.Errors).CurrentItem}" />
-
-                <Button Grid.Column="0" Grid.Row="2" Content="сохранить" Margin="2"/>
-                <Button Grid.Column="1" Grid.Row="2" Content="отменить" Margin="2"/>
-            </Grid>
-        </Grid>
-
+        <ListView Grid.Row="1" ItemsSource="{Binding Agents}">
+            <ListView.View>
+                <GridView>
+                    <GridView.Columns>
+                        <!--<GridViewColumn Header="Задействовать" Width="90">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <CheckBox Tag="{Binding IsEnabled}" IsChecked="{Binding IsEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>-->
+                        <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Исполнитель" Width="120" />
+                        <GridViewColumn DisplayMemberBinding="{Binding CpuFrequency, StringFormat={}{0} GHz}" Header="Частота" Width="100" />
+                    </GridView.Columns>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button Grid.Row="2" Content="применить" Margin="0,5" Click="ButtonClick"/>
     </Grid>
 </Window>

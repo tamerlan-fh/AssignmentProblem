@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AssignmentProblem.Managers;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,5 +14,11 @@ namespace AssignmentProblem
     /// </summary>
     public partial class App : Application
     {
+
+        protected override void OnExit(ExitEventArgs e)
+        {
+            AgentManager.Instance.Dispose();
+            base.OnExit(e);
+        }
     }
 }

@@ -1,11 +1,5 @@
 ﻿using AssignmentProblem.Library;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 
 namespace AssignmentProblem.Client.ViewModels
 {
@@ -17,9 +11,11 @@ namespace AssignmentProblem.Client.ViewModels
             ConnectCommand = new RelayCommand(p => Connect(), p => CanConnect());
 
             Name = Environment.UserName;
+            CpuFrequency = 3.0;
+            Ram = 8;
+            Host = "127.0.0.1";
+            Port = 7777;
         }
-
-        private AgentClient agent;
 
         #region commands
 
@@ -74,12 +70,12 @@ namespace AssignmentProblem.Client.ViewModels
 
         public bool AgentNotCreated
         {
-            get { return agent is null; }
+            get { return AgentClient.Instance.AgentNotCreated; }
         }
 
         public bool AgentNotConnected
         {
-            get { return AgentNotCreated || !agent.IsConnected; }
+            get { return !AgentClient.Instance.IsConnected; }
         }
 
         #endregion
@@ -88,8 +84,9 @@ namespace AssignmentProblem.Client.ViewModels
 
         private void CreateAgent()
         {
-            agent = new AgentClient(new Agent(Name)
+            AgentClient.Instance.CreateAgent(new Agent()
             {
+                Name = Name,
                 CpuFrequency = CpuFrequency,
                 Ram = Ram
             });
@@ -106,7 +103,7 @@ namespace AssignmentProblem.Client.ViewModels
 
         private void Connect()
         {
-            agent.Connect(Host, port);
+            AgentClient.Instance.Connect(Host, port);
             OnPropertyChanged("AgentNotConnected");
         }
 

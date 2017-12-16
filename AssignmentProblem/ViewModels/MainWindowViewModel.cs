@@ -1,4 +1,6 @@
-﻿using AssignmentProblem.Models;
+﻿using AssignmentProblem.Managers;
+using AssignmentProblem.Models;
+using AssignmentProblem.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,17 +14,20 @@ namespace AssignmentProblem.ViewModels
     {
         public MainWindowViewModel()
         {
-            Agents = new ObservableCollection<AgentViewModel>();
+            AgentsEditCommand = new RelayCommand(p => AgentsEdit());
             Operations = new ObservableCollection<OperationViewModel>();
+      //      AgentManager.Instance.ServerStart();
         }
 
-        #region commands
+        public RelayCommand AgentsEditCommand { get; private set; }
 
-        public RelayCommand Command { get; private set; }
-
-        #endregion
-
-        public ObservableCollection<AgentViewModel> Agents { get; private set; }
+        public ObservableCollection<AgentViewModel> Agents { get { return AgentManager.Instance.Agents; } }
         public ObservableCollection<OperationViewModel> Operations { get; private set; }
+
+        private void AgentsEdit()
+        {
+            var window = new AgentСonfigurator();
+            window.Show();
+        }
     }
 }

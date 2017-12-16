@@ -78,7 +78,6 @@
     <Compile Include="Managers\AgentManager.cs" />
     <Compile Include="Managers\AssignmentManager.cs" />
     <Compile Include="Managers\EvaluationManager.cs" />
-    <Compile Include="Models\Agent.cs" />
     <Compile Include="Models\Estimate.cs" />
     <Compile Include="Models\Operation.cs" />
     <Compile Include="Managers\OperationManager.cs" />
@@ -153,6 +152,12 @@
   <ItemGroup>
     <Resource Include="Icons\agent_ico_64.png" />
     <Resource Include="Icons\operation_ico_64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AssignmentProblem.Library\AssignmentProblem.Library.csproj">
+      <Project>{d2897cab-fc5c-4740-aa61-81e373cbf520}</Project>
+      <Name>AssignmentProblem.Library</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

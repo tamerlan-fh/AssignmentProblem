@@ -1,33 +1,28 @@
-﻿namespace AssignmentProblem.Library
+﻿using Newtonsoft.Json;
+
+namespace AssignmentProblem.Library
 {
     /// <summary>
     /// исполнитель
     /// </summary>
     public class Agent
     {
-
-        public Agent(string name)
-        {
-
-        }
         /// <summary>
         /// наименование агента
         /// </summary>
+        [JsonProperty("name")]
         public string Name { get; set; }
-
-        /// <summary>
-        /// число ядер
-        /// </summary>
-        public int ProcessorCount { get; set; }
 
         /// <summary>
         /// частота процессора, GHz
         /// </summary>
+        [JsonProperty("cpu_frequency")]
         public double CpuFrequency { get; set; }
 
         /// <summary>
         /// объем оперативной памяти, GB
         /// </summary>
+        [JsonProperty("ram")]
         public double Ram { get; set; }
 
         public override string ToString()

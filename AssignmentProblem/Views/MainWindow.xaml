@@ -36,7 +36,7 @@
                     </Viewbox>
                     <TextBox Text="{Binding Agents.Count, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" HorizontalAlignment="Center" BorderThickness="0" VerticalAlignment="Center" />
                 </StackPanel>
-                <Button Grid.Row="2" Content="редактировать" Margin="3"/>
+                <Button Grid.Row="2" Content="просмотр" Command="{Binding AgentsEditCommand}" Margin="3"/>
             </Grid>
 
             <Grid Grid.Column="1">
@@ -52,7 +52,7 @@
                     </Viewbox>
                     <TextBox Text="{Binding Operations.Count, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" HorizontalAlignment="Center" BorderThickness="0" VerticalAlignment="Center" />
                 </StackPanel>
-                <Button Grid.Row="2" Content="редактировать" Margin="3"/>
+                <Button Grid.Row="2" Content="просмотр" Margin="3"/>
             </Grid>
         </Grid>
 
@@ -67,7 +67,7 @@
 
             <GridSplitter Grid.Column="1" ShowsPreview="False" Width="5" HorizontalAlignment="Center" VerticalAlignment="Stretch" Background="Transparent" />
 
-            <ListBox Grid.Column="0" ItemsSource="{Binding Agents}" />
+            <!--<ListBox Grid.Column="0" ItemsSource="{Binding Agents}" />-->
 
         </Grid>
     </Grid>

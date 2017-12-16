@@ -1,42 +1,72 @@
 ﻿using AssignmentProblem.Library;
+using Newtonsoft.Json;
 using System;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace AssignmentProblem.Client
 {
     class AgentClient : IDisposable
     {
-        private TcpClient tcpClient;
 
-        private readonly Agent agent;
-
-        public AgentClient(Agent agent)
+        public static AgentClient Instance
         {
-            tcpClient = new TcpClient();
+            get
+            {
+                if(instance == null)
+                    instance = new AgentClient();
+                return instance;
+            }
+        }
+        private static AgentClient instance;
+
+        private AgentClient()
+        {
+            client = new TcpClient();
+        }
+
+        private readonly TcpClient client;
+        private NetworkStream stream;
+
+        private Agent agent = null;
+
+        public void CreateAgent(Agent agent)
+        {
+
             this.agent = agent;
         }
 
-        private Agent GetAgent()
-        {
-            var agent = new Agent(Environment.UserName);
-            return agent;
-        }
-
+        /// <summary>
+        /// исполнитель подключен
+        /// </summary>
         public bool IsConnected
         {
-            get { return tcpClient.Connected; }
+            get { return agent != null && client.Connected; }
         }
 
-        public void Connect(string host, int port)
+        public bool AgentNotCreated
+        {
+            get { return agent is null; }
+        }
+
+        /// <summary>
+        /// подключение по указанному адресу
+        /// </summary>
+        /// <param name="host"></param>
+        /// <param name="port"></param>
+        public async void Connect(string host, int port)
         {
             if(IsConnected)
                 return;
 
             try
             {
-                tcpClient.Connect(host, port);
+                client.Connect(host, port);
+                stream = client.GetStream();
+                await SendAgent();
+                WaitOperations();
             }
             catch(Exception ex)
             {
@@ -44,7 +74,10 @@ namespace AssignmentProblem.Client
             }
         }
 
-        public async void WaitOperations()
+        /// <summary>
+        /// ожидание назначения задач для исполнителя
+        /// </summary>
+        private async void WaitOperations()
         {
             if(!IsConnected)
                 return;
@@ -52,16 +85,14 @@ namespace AssignmentProblem.Client
             var response = new StringBuilder();
             try
             {
-                using(var stream = tcpClient.GetStream())
+                var data = new byte[256];
+                do
                 {
-                    var data = new byte[256];
-                    do
-                    {
-                        int bytes = await stream.ReadAsync(data, 0, data.Length);
-                        response.Append(Encoding.UTF8.GetString(data, 0, bytes));
-                    }
-                    while(stream.DataAvailable); // пока данные есть в потоке
+                    int bytes = await stream.ReadAsync(data, 0, data.Length);
+                    response.Append(Encoding.UTF8.GetString(data, 0, bytes));
                 }
+                while(stream.DataAvailable); // пока данные есть в потоке
+                ;
             }
             catch(Exception ex)
             {
@@ -69,20 +100,43 @@ namespace AssignmentProblem.Client
             }
         }
 
+        /// <summary>
+        /// оправляет информация об исполнителе
+        /// </summary>
+        private async Task SendAgent()
+        {
+            try
+            {
+                var message = JsonConvert.SerializeObject(agent);
+                var data = Encoding.UTF8.GetBytes(message);
+                await stream.WriteAsync(data, 0, data.Length);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        /// <summary>
+        /// разорвать соединение
+        /// </summary>
         public void Disconnect()
         {
             if(!IsConnected)
                 return;
 
-            tcpClient.Close();
+            client.Close();
         }
 
         public void Dispose()
         {
             if(IsConnected)
-                tcpClient.Close();
+            {
+                stream.Dispose();
+                client.Close();
+            }
 
-            tcpClient.Dispose();
+            client.Dispose();
         }
     }
 }

@@ -63,10 +63,10 @@
         <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding Name}" Margin="2" TextAlignment="Center"/>-->
 
         <TextBlock Grid.Row="7" Grid.Column="0" Text="хост" VerticalAlignment="Center" Margin="5,0" HorizontalAlignment="Right"/>
-        <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding Host, UpdateSourceTrigger=PropertyChanged}" Margin="2" TextAlignment="Center" IsEnabled="{Binding AgentNotConnected, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding Host, UpdateSourceTrigger=PropertyChanged}" Margin="2" TextAlignment="Left" IsEnabled="{Binding AgentNotConnected, UpdateSourceTrigger=PropertyChanged}"/>
 
         <TextBlock Grid.Row="8" Grid.Column="0" Text="порт" VerticalAlignment="Center" Margin="5,0" HorizontalAlignment="Right"/>
-        <TextBox Grid.Row="8" Grid.Column="1" Text="{Binding Port, UpdateSourceTrigger=PropertyChanged}" Margin="2" TextAlignment="Center" IsEnabled="{Binding AgentNotConnected, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBox Grid.Row="8" Grid.Column="1" Text="{Binding Port, UpdateSourceTrigger=PropertyChanged}" Margin="2" TextAlignment="Left" IsEnabled="{Binding AgentNotConnected, UpdateSourceTrigger=PropertyChanged}"/>
 
         <Button Margin="5,3" Grid.Row="9" Grid.ColumnSpan="3" Content="подключиться" Command="{Binding ConnectCommand}"/>
         <Button Margin="5,3" Grid.Row="10" Grid.ColumnSpan="3" Content="выйти" Click="ButtonClick" />

@@ -11,5 +11,10 @@ namespace AssignmentProblem.Views
         {
             InitializeComponent();
         }
+
+        private void ButtonClick(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 }
