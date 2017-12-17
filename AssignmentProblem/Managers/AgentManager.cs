@@ -1,5 +1,4 @@
 ﻿using AssignmentProblem.Library;
-using AssignmentProblem.Models;
 using AssignmentProblem.ViewModels;
 using Newtonsoft.Json;
 using System;
@@ -48,6 +47,11 @@ namespace AssignmentProblem.Managers
         public string Address { get { return $"{Host}:{Port}"; } }
 
         public ObservableCollection<AgentViewModel> Agents { get; private set; }
+
+        public Agent[] GetAgents()
+        {
+            return Agents.Select(x => x.Agent).ToArray();
+        }
 
         public int EnabledAgentsCount { get { return Agents.Where(x => x.IsEnabled).Count(); } }
 

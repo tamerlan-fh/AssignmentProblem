@@ -21,6 +21,12 @@ namespace AssignmentProblem.Library
         public double Complexity { get; set; }
 
         /// <summary>
+        /// имя файла, представляющего задачу распознования
+        /// </summary>
+        [JsonProperty("filename")]
+        public string Filename { get; set; }
+
+        /// <summary>
         /// тело задачи в байтовом представлении
         /// </summary>
         [JsonProperty("content")]

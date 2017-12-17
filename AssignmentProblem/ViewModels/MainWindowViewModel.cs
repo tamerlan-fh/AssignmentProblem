@@ -1,5 +1,4 @@
 ﻿using AssignmentProblem.Managers;
-using AssignmentProblem.Models;
 using AssignmentProblem.Views;
 using System;
 using System.Collections.Generic;
@@ -16,10 +15,12 @@ namespace AssignmentProblem.ViewModels
         {
             AgentsEditCommand = new RelayCommand(p => AgentsEdit());
             OperationsEditCommand = new RelayCommand(p => OperationsEdit());
+            AssignmentCommand = new RelayCommand(p => Assignment(), p => CanAssignment());
         }
 
         public RelayCommand AgentsEditCommand { get; private set; }
         public RelayCommand OperationsEditCommand { get; private set; }
+        public RelayCommand AssignmentCommand { get; private set; }
 
         public ObservableCollection<AgentViewModel> Agents { get { return AgentManager.Instance.Agents; } }
         public ObservableCollection<OperationViewModel> Operations { get { return OperationManager.Instance.Operations; } }
@@ -34,6 +35,20 @@ namespace AssignmentProblem.ViewModels
         {
             var window = new OperationConfigurator();
             window.Show();
+        }
+
+        private void Assignment()
+        {
+            var result = AssignmentManager.Instance.DoAssignment(AgentManager.Instance.GetAgents(), OperationManager.Instance.GetOperations());
+
+            foreach(var agent in Agents)
+                foreach(var operation in result[agent.Agent])
+                    agent.Operations.Add(Operations.FirstOrDefault(x => x.ID == operation.ID));
+        }
+
+        private bool CanAssignment()
+        {
+            return Agents.Any() && Operations.Any();
         }
     }
 }

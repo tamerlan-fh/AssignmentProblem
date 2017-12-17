@@ -1,22 +1,19 @@
 ﻿using AssignmentProblem.Library;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AssignmentProblem.ViewModels
 {
     class OperationViewModel : ViewModelBase
     {
-        private Operation model;
+        public Operation Model { get; private set; }
         public OperationViewModel(Operation operation)
         {
-            this.model = operation;
+            this.Model = operation;
         }
 
-        public int ID { get { return model.ID; } }
+        public int ID { get { return Model.ID; } }
 
-        public double Complexity { get { return model.Complexity; } }
+        public double Complexity { get { return Model.Complexity; } }
+
+        public string Filename { get { return Model.Filename; } }
     }
 }

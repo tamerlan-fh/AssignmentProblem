@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:AssignmentProblem.ViewModels"
         mc:Ignorable="d"
-        Title="Задачи" Height="300" Width="300" Icon="/AssignmentProblem;component/Icons/operation_ico_64.png" WindowStartupLocation="CenterScreen">
+        Title="Задачи" Height="480" Width="380" Icon="/AssignmentProblem;component/Icons/operation_ico_64.png" WindowStartupLocation="CenterScreen">
     <Window.DataContext>
         <vm:OperationConfiguratorViewModel/>
     </Window.DataContext>
@@ -15,19 +15,22 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <ListView Grid.Row="1" ItemsSource="{Binding Operations}">
+        <ListView Grid.Row="1" Name="items_list" ItemsSource="{Binding Operations}" SelectionMode="Extended" >
             <ListView.View>
                 <GridView>
                     <GridView.Columns>
-                        <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="id" Width="50" />
-                        <GridViewColumn DisplayMemberBinding="{Binding CpuFrequency, StringFormat={}{0} GHz}" Header="сложность" Width="100" />
+                        <GridViewColumn DisplayMemberBinding="{Binding ID}" Header="id" Width="50" />
+                        <GridViewColumn DisplayMemberBinding="{Binding Complexity, StringFormat={}{0:N3}}" Header="сложность" Width="100" />
+                        <GridViewColumn DisplayMemberBinding="{Binding Filename}" Header="файл" />
                     </GridView.Columns>
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Grid.Row="2" Content="добавить" Margin="0,3"/>
-        <Button Grid.Row="3" Content="применить" Margin="0,3" Click="ButtonClick"/>
+        <Button Grid.Row="2" Content="добавить" Margin="0,3" Command="{Binding AddOperationCommand}"/>
+        <Button Grid.Row="3" Content="удалить" Margin="0,3" Command="{Binding RemoveOperationCommand}" CommandParameter="{Binding ElementName=items_list, Path=SelectedItems}"/>
+        <Button Grid.Row="4" Content="закрыть" Margin="0,3" Click="ButtonClick"/>
     </Grid>
 </Window>

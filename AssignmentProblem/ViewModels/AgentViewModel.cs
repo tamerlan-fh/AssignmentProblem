@@ -1,5 +1,4 @@
 ﻿using AssignmentProblem.Library;
-using AssignmentProblem.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,13 +12,16 @@ namespace AssignmentProblem.ViewModels
 {
     class AgentViewModel : ViewModelBase, IDisposable
     {
-        private readonly Agent agent;
+        public Agent Agent { get; private set; }
+
         private readonly TcpClient client;
         public AgentViewModel(Agent agent, TcpClient client)
         {
-            this.agent = agent;
+            this.Agent = agent;
             this.client = client;
             IsEnabled = true;
+
+            Operations = new ObservableCollection<OperationViewModel>();
         }
 
         public bool IsEnabled
@@ -29,9 +31,17 @@ namespace AssignmentProblem.ViewModels
         }
         private bool isEnabled;
 
-        public string Name { get { return agent.Name; } }
+        public string Name { get { return Agent.Name; } }
 
-        public double CpuFrequency { get { return agent.CpuFrequency; } }
+        public double CpuFrequency { get { return Agent.CpuFrequency; } }  
+
+        public ObservableCollection<OperationViewModel> Operations { get; private set; }
+
+        public void SendOperations()
+        {
+
+        }
+
         private async void WaitProducts()
         {
             var response = new StringBuilder();
@@ -54,17 +64,10 @@ namespace AssignmentProblem.ViewModels
             }
         }
 
-        public void SendOperations()
-        {
-
-        }
-
         public void Dispose()
         {
             client.Close();
             client.Dispose();
         }
-
-        public ObservableCollection<OperationViewModel> Operations { get; private set; }
     }
 }

@@ -77,9 +77,6 @@
     </ApplicationDefinition>
     <Compile Include="Managers\AgentManager.cs" />
     <Compile Include="Managers\AssignmentManager.cs" />
-    <Compile Include="Managers\EvaluationManager.cs" />
-    <Compile Include="Models\Estimate.cs" />
-    <Compile Include="Models\Operation.cs" />
     <Compile Include="Managers\OperationManager.cs" />
     <Compile Include="ViewModels\AgentViewModel.cs" />
     <Compile Include="ViewModels\AgentСonfiguratorViewModel.cs" />
