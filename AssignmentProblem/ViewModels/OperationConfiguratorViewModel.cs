@@ -1,8 +1,5 @@
-﻿using AssignmentProblem.Library;
-using AssignmentProblem.Managers;
+﻿using AssignmentProblem.Managers;
 using Microsoft.Win32;
-using System.Collections;
-using System.Windows.Controls;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -26,9 +23,9 @@ namespace AssignmentProblem.ViewModels
         private void AddOperation()
         {
             var dialog = new OpenFileDialog();
-            dialog.Filter = "BMP | *.bmp | GIF | *.gif | JPG | *.jpg; *.jpeg | PNG | *.png | TIFF | *.tif; *.tiff | "
+            dialog.Filter = "bmp | *.bmp | gif | *.gif | jpg | *.jpg; *.jpeg | png | *.png | tif | *.tif; *.tiff | "
                            + "All Graphics Types|*.bmp;*.jpg;*.jpeg;*.png;*.tif;*.tiff";
-            dialog.FilterIndex = 1;
+            dialog.FilterIndex = 6;
             dialog.Multiselect = true;
             dialog.RestoreDirectory = true;
 

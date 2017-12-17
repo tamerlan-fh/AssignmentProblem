@@ -2,7 +2,7 @@
 
 namespace AssignmentProblem.Library
 {
-    class Product
+    public class Product
     {
         [JsonProperty("id")]
         public int ID { get; set; }

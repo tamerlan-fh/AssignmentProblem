@@ -71,21 +71,7 @@ namespace AssignmentProblem.Managers
                     try
                     {
                         var client = await server.AcceptTcpClientAsync();
-                        var response = new StringBuilder();
-                        using(var stream = client.GetStream())
-                        {
-                            var data = new byte[256];
-                            do
-                            {
-                                int length = await stream.ReadAsync(data, 0, data.Length);
-                                response.Append(Encoding.UTF8.GetString(data, 0, length));
-                            }
-                            while(stream.DataAvailable); // пока данные есть в потоке
-                        }
-
-                        var agent = JsonConvert.DeserializeObject<Agent>(response.ToString());
-
-                        AddAgent(agent, client);
+                        AddAgent(client);
                     }
                     catch
                     {
@@ -109,9 +95,9 @@ namespace AssignmentProblem.Managers
             server.Stop();
         }
 
-        private void AddAgent(Agent agent, TcpClient client)
+        private void AddAgent(TcpClient client)
         {
-            Agents.Add(new AgentViewModel(agent, client));
+            Agents.Add(new AgentViewModel(client));
         }
 
         public string GetCurrentIpAddress()

@@ -43,7 +43,7 @@ namespace AssignmentProblem.ViewModels
 
             foreach(var agent in Agents)
                 foreach(var operation in result[agent.Agent])
-                    agent.Operations.Add(Operations.FirstOrDefault(x => x.ID == operation.ID));
+                    agent.AddOperation(Operations.FirstOrDefault(x => x.ID == operation.ID));
         }
 
         private bool CanAssignment()
