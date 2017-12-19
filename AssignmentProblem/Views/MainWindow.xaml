@@ -56,7 +56,7 @@
                                     <RowDefinition Height="auto"/>
                                     <RowDefinition/>
                                 </Grid.RowDefinitions>
-                                <TextBox Grid.Row="0" Text="задачи" IsReadOnly="True" HorizontalAlignment="Center" BorderThickness="0" Background="Transparent" />
+                                <TextBox Grid.Row="0" Text="назначенные задачи" IsReadOnly="True" HorizontalAlignment="Center" BorderThickness="0" Background="Transparent" />
                                 <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
                                     <Viewbox Height="48" Width="48">
                                         <Image Source="/AssignmentProblem;component/Icons/operation_ico_64.png" />

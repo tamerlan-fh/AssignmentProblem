@@ -39,12 +39,21 @@ namespace AssignmentProblem.ViewModels
 
         private void Assignment()
         {
-           var result = AssignmentManager.Instance.DoAssignment(AgentManager.Instance.GetAgents(), OperationManager.Instance.GetOperations());
-           // var result = AssignmentManager.Instance.hungarian(AgentManager.Instance.GetAgents(), OperationManager.Instance.GetOperations());
+            //var result = AssignmentManager.Instance.DoAssignment(AgentManager.Instance.GetAgents(), OperationManager.Instance.GetOperations());
+            var agents = AgentManager.Instance.Agents.ToArray();
+            OperationViewModel[] operations = null;
+            operations = OperationManager.Instance.Operations.Where(x => x.Agent is null).ToArray();
 
-            foreach(var agent in Agents)
-                foreach(var operation in result[agent.Agent])
-                    agent.AddOperation(Operations.FirstOrDefault(x => x.ID == operation.ID));
+            while(operations.Any())
+            {
+                var result = AssignmentManager.Instance.hungarian(agents, operations);
+
+                foreach(var agent in agents)
+                    foreach(var operation in result[agent])
+                        agent.AddOperation(operation);
+
+                operations = OperationManager.Instance.Operations.Where(x => x.Agent is null).ToArray();
+            };
         }
 
         private bool CanAssignment()

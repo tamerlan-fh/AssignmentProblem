@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Dynamic;
+using AssignmentProblem.ViewModels;
 
 namespace AssignmentProblem.Managers
 {
@@ -169,10 +170,12 @@ namespace AssignmentProblem.Managers
             return mx;
         }
 
-        //List<List<int>> hungarian(List<List<int>> matrix)
-        public Dictionary<Agent, List<Operation>> hungarian(Agent[] agents, Operation[] operations)
+        public Dictionary<AgentViewModel, List<OperationViewModel>> hungarian(AgentViewModel[] agents, OperationViewModel[] operations)
         {
-            // Размеры матрицы
+            var assignment = new Dictionary<AgentViewModel, List<OperationViewModel>>();
+            foreach(var agent in agents)
+                assignment.Add(agent, new List<OperationViewModel>());
+
             int height = agents.Length;
             int width = operations.Length;
 
@@ -182,9 +185,17 @@ namespace AssignmentProblem.Managers
 
             for(int i = 0; i < height; i++)
                 for(int j = 0; j < width; j++)
-                    matrix[i, j] = Operation.GetTiming(agents[i].CpuFrequency, operations[j].Complexity).Ticks;
+                    matrix[i, j] = (agents[i].OperationsTime + Operation.GetTiming(agents[i].CpuFrequency, operations[j].Complexity)).Ticks;
 
-            //if(height<rang)
+            if(height < rang)
+                for(int i = height; i < rang; i++)
+                    for(int j = 0; j < rang; j++)
+                        matrix[i, j] = TimeSpan.MaxValue.Ticks;
+
+            if(width < rang)
+                for(int i = 0; i < rang; i++)
+                    for(int j = width; j < rang; j++)
+                        matrix[i, j] = TimeSpan.MaxValue.Ticks;
 
 
             try
@@ -267,29 +278,35 @@ namespace AssignmentProblem.Managers
 
                 var items = new dynamic[rang];
 
+                for(int j = 0; j < width; j++)
+                {
+                    if(marks[j] == -1 || marks[j] > height) continue;
 
-                // Вернем результат в естественной форме
-                List<List<int>> result = new List<List<int>>();
-                for(int j = 0; j < rang; j++)
-                    if(marks[j] != -1)
-                    {
-                        dynamic item = new ExpandoObject();
-                        item.operation1 = operations[j];
-                        item.agent1 = agents[marks[j]];
-                        item.time1 = Operation.GetTiming(operations[j].Complexity, agents[marks[j]].CpuFrequency);
+                    assignment[agents[marks[j]]].Add(operations[j]);
+                }
 
-                        item.operation2 = operations[marks[j]];
-                        item.agent2 = agents[j];
-                        item.time2 = Operation.GetTiming(operations[marks[j]].Complexity, agents[j].CpuFrequency);
-                        items[j] = item;
-                        result.Add(new List<int>() { marks[j], j });
-                    }
+                //// Вернем результат в естественной форме
+                //List<List<int>> result = new List<List<int>>();
+                //for(int j = 0; j < rang; j++)
+                //    if(marks[j] != -1)
+                //    {
+                //        dynamic item = new ExpandoObject();
+                //        item.operation1 = operations[j];
+                //        item.agent1 = agents[marks[j]];
+                //        item.time1 = Operation.GetTiming(operations[j].Complexity, agents[marks[j]].CpuFrequency);
 
-                return null;
+                //        item.operation2 = operations[marks[j]];
+                //        item.agent2 = agents[j];
+                //        item.time2 = Operation.GetTiming(operations[marks[j]].Complexity, agents[j].CpuFrequency);
+                //        items[j] = item;
+                //        result.Add(new List<int>() { marks[j], j });
+                //    }
+
+                return assignment;
             }
             catch(Exception ex)
             {
-                return null;
+                return assignment;
             }
         }
     }
