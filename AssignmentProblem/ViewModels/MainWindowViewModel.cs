@@ -46,7 +46,7 @@ namespace AssignmentProblem.ViewModels
 
             while(operations.Any())
             {
-                var result = AssignmentManager.Instance.hungarian(agents, operations);
+                var result = AssignmentManager.Instance.DoAssignment(agents, operations);
 
                 foreach(var agent in agents)
                     foreach(var operation in result[agent])
