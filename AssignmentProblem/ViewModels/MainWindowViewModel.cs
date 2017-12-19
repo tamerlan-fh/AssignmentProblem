@@ -39,7 +39,8 @@ namespace AssignmentProblem.ViewModels
 
         private void Assignment()
         {
-            var result = AssignmentManager.Instance.DoAssignment(AgentManager.Instance.GetAgents(), OperationManager.Instance.GetOperations());
+            //var result = AssignmentManager.Instance.DoAssignment(AgentManager.Instance.GetAgents(), OperationManager.Instance.GetOperations());
+            var result = AssignmentManager.Instance.hungarian(AgentManager.Instance.GetAgents(), OperationManager.Instance.GetOperations());
 
             foreach(var agent in Agents)
                 foreach(var operation in result[agent.Agent])

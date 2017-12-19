@@ -24,21 +24,22 @@
                     </Grid.RowDefinitions>
 
                     <TextBlock Text="{Binding Name}" Grid.Column="0" Grid.Row="0"  TextAlignment="Center"/>
-                    
+
                     <Viewbox Height="48" Width="48" Grid.Column="0" Grid.Row="1" Margin="10,0" VerticalAlignment="Center">
                         <Image Source="/AssignmentProblem;component/Icons/agent_ico_64.png" />
                     </Viewbox>
-                    
 
                     <Grid Grid.Column="1" Grid.RowSpan="2" Margin="10,0" VerticalAlignment="Center">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto" MinWidth="80"/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
+                            <RowDefinition/>
                         </Grid.RowDefinitions>
 
                         <TextBlock Text="число назначенных задач" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right" Margin="0,0,10,0"/>
@@ -48,7 +49,19 @@
                         <TextBlock Text="{Binding OperationsComplectedCount}" Grid.Column="1" Grid.Row="1" />
 
                         <TextBlock Text="оценочное время выполнения задач" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right" Margin="0,0,10,0"/>
-                        <TextBlock Text="{Binding OperationsTime}" Grid.Column="1" Grid.Row="2" />
+                        <TextBlock Text="{Binding OperationsTime, StringFormat={}{0:hh\\:mm\\:ss\\.fff}}" Grid.Column="1" Grid.Row="2" />
+
+                        <ListView ItemsSource="{Binding Operations}" SelectionMode="Extended" Grid.Column="2" Grid.RowSpan="4" Height="50" VirtualizingPanel.ScrollUnit="Pixel" BorderThickness="0" Margin="10,0">
+                            <ListView.View>
+                                <GridView>
+                                    <GridView.Columns>
+                                        <GridViewColumn DisplayMemberBinding="{Binding ID}" Header="id" Width="50" />
+                                        <GridViewColumn DisplayMemberBinding="{Binding Complexity, StringFormat={}{0:N3}}" Header="сложность" Width="100" />
+                                        <GridViewColumn DisplayMemberBinding="{Binding Filename}" Header="файл" />
+                                    </GridView.Columns>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
                     </Grid>
                 </Grid>
             </Border>
