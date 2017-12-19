@@ -120,8 +120,8 @@
         <Button Grid.Row="1" Content="произвести назначение" Command="{Binding AssignmentCommand}" Margin="3"/>
         <!--<ListBox Grid.Row="2" ItemsSource="{Binding Agents}" ItemTemplate="{StaticResource ListBoxItem}" HorizontalContentAlignment="Stretch" VirtualizingPanel.ScrollUnit="Pixel" BorderThickness="0"/>-->
 
-        <ScrollViewer Grid.Row="2">
-            <ItemsControl  ItemsSource="{Binding Agents}" ItemTemplate="{StaticResource ListBoxItem}" HorizontalContentAlignment="Stretch" VirtualizingPanel.ScrollUnit="Pixel" BorderThickness="0" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
+            <ItemsControl  ItemsSource="{Binding Agents}" ItemTemplate="{StaticResource ListBoxItem}" HorizontalContentAlignment="Stretch" VirtualizingPanel.ScrollUnit="Pixel" BorderThickness="0" />
         </ScrollViewer>
     </Grid>
 </Window>
