@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:AssignmentProblem.ViewModels"
         mc:Ignorable="d"
-        Title="Задача о назначениях" Height="350" Width="525" Icon="/AssignmentProblem;component/Icons/usatu.ico" WindowStartupLocation="CenterScreen">
+        Title="Задача о назначениях" Height="350" Width="600" Icon="/AssignmentProblem;component/Icons/usatu.ico" WindowStartupLocation="CenterScreen">
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
@@ -39,7 +39,6 @@
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
-                            <RowDefinition/>
                         </Grid.RowDefinitions>
 
                         <TextBlock Text="число назначенных задач" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right" Margin="0,0,10,0"/>
@@ -51,17 +50,21 @@
                         <TextBlock Text="оценочное время выполнения задач" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right" Margin="0,0,10,0"/>
                         <TextBlock Text="{Binding OperationsTime, StringFormat={}{0:hh\\:mm\\:ss\\.fff}}" Grid.Column="1" Grid.Row="2" />
 
-                        <ListView ItemsSource="{Binding Operations}" SelectionMode="Extended" Grid.Column="2" Grid.RowSpan="4" Height="50" VirtualizingPanel.ScrollUnit="Pixel" BorderThickness="0" Margin="10,0">
-                            <ListView.View>
-                                <GridView>
-                                    <GridView.Columns>
-                                        <GridViewColumn DisplayMemberBinding="{Binding ID}" Header="id" Width="50" />
-                                        <GridViewColumn DisplayMemberBinding="{Binding Complexity, StringFormat={}{0:N3}}" Header="сложность" Width="100" />
-                                        <GridViewColumn DisplayMemberBinding="{Binding Filename}" Header="файл" />
-                                    </GridView.Columns>
-                                </GridView>
-                            </ListView.View>
-                        </ListView>
+                        <Button Grid.Column="2" Grid.RowSpan="3" Margin="10,0" VerticalAlignment="Center" Command="{Binding ViewOperationsCommand}">
+                            <Grid Grid.Column="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <TextBox Grid.Row="0" Text="задачи" IsReadOnly="True" HorizontalAlignment="Center" BorderThickness="0" Background="Transparent" />
+                                <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <Viewbox Height="48" Width="48">
+                                        <Image Source="/AssignmentProblem;component/Icons/operation_ico_64.png" />
+                                    </Viewbox>
+                                    <TextBox Text="{Binding Operations.Count, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" HorizontalAlignment="Center" BorderThickness="0" VerticalAlignment="Center" Background="Transparent"/>
+                                </StackPanel>
+                            </Grid>
+                        </Button>
                     </Grid>
                 </Grid>
             </Border>
@@ -115,6 +118,10 @@
         </Grid>
 
         <Button Grid.Row="1" Content="произвести назначение" Command="{Binding AssignmentCommand}" Margin="3"/>
-        <ListBox Grid.Row="2" ItemsSource="{Binding Agents}" ItemTemplate="{StaticResource ListBoxItem}" HorizontalContentAlignment="Stretch" VirtualizingPanel.ScrollUnit="Pixel" BorderThickness="0"/>
+        <!--<ListBox Grid.Row="2" ItemsSource="{Binding Agents}" ItemTemplate="{StaticResource ListBoxItem}" HorizontalContentAlignment="Stretch" VirtualizingPanel.ScrollUnit="Pixel" BorderThickness="0"/>-->
+
+        <ScrollViewer Grid.Row="2">
+            <ItemsControl  ItemsSource="{Binding Agents}" ItemTemplate="{StaticResource ListBoxItem}" HorizontalContentAlignment="Stretch" VirtualizingPanel.ScrollUnit="Pixel" BorderThickness="0" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+        </ScrollViewer>
     </Grid>
 </Window>

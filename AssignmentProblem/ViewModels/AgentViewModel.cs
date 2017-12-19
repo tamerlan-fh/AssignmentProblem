@@ -1,17 +1,17 @@
-﻿using AssignmentProblem.Library;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using AssignmentProblem.Library;
+using AssignmentProblem.Views;
+using Newtonsoft.Json;
 
 namespace AssignmentProblem.ViewModels
 {
-    class AgentViewModel : ViewModelBase, IDisposable
+    public class AgentViewModel : ViewModelBase, IDisposable
     {
         public Agent Agent { get; private set; }
 
@@ -30,11 +30,16 @@ namespace AssignmentProblem.ViewModels
             IsEnabled = true;
 
             Operations = new ObservableCollection<OperationViewModel>();
-            TimeSpan t0 = TimeSpan.FromSeconds(1);
-            TimeSpan t1 = TimeSpan.FromSeconds(1);
-            TimeSpan t2 = TimeSpan.FromSeconds(1);
 
-            TimeSpan t = t0 + t1 + t2;
+            ViewOperationsCommand = new RelayCommand(p => ViewOperations());
+        }
+
+        public RelayCommand ViewOperationsCommand { get; private set; }
+
+        private void ViewOperations()
+        {
+            var window = new OperationForAgent(this);
+            window.Show();
         }
 
         private async Task<Agent> GetAgent()
@@ -80,9 +85,12 @@ namespace AssignmentProblem.ViewModels
         public void AddOperation(OperationViewModel operation)
         {
             Operations.Add(operation);
+            operation.Agent = this.Agent;
 
-            var ticks = Operations.Select(x => Operation.GetTiming(x.Complexity, Agent.CpuFrequency)).Sum(x => x.Ticks);
-            OperationsTime = TimeSpan.FromTicks(ticks);
+            //var ticks = Operations.Select(x => Operation.GetTiming(x.Complexity, Agent.CpuFrequency)).Sum(x => x.Ticks);
+            //OperationsTime = TimeSpan.FromTicks(ticks);
+
+            OperationsTime = TimeSpan.FromTicks(Operations.Select(x => x.Time).Sum(x => x.Ticks));
         }
 
         public async void SendOperations()

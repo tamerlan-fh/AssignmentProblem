@@ -88,6 +88,9 @@
     <Compile Include="Views\OperationConfigurator.xaml.cs">
       <DependentUpon>OperationConfigurator.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\OperationForAgent.xaml.cs">
+      <DependentUpon>OperationForAgent.xaml</DependentUpon>
+    </Compile>
     <Page Include="Views\AgentСonfigurator.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -108,6 +111,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\OperationConfigurator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\OperationForAgent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

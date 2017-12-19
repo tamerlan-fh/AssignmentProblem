@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Dynamic;
 
 namespace AssignmentProblem.Managers
 {
@@ -264,11 +265,26 @@ namespace AssignmentProblem.Managers
                     marks[j] = i;
                 }
 
+                var items = new dynamic[rang];
+
+
                 // Вернем результат в естественной форме
                 List<List<int>> result = new List<List<int>>();
-                for(int j = 0; j < width; j++)
+                for(int j = 0; j < rang; j++)
                     if(marks[j] != -1)
+                    {
+                        dynamic item = new ExpandoObject();
+                        item.operation1 = operations[j];
+                        item.agent1 = agents[marks[j]];
+                        item.time1 = Operation.GetTiming(operations[j].Complexity, agents[marks[j]].CpuFrequency);
+
+                        item.operation2 = operations[marks[j]];
+                        item.agent2 = agents[j];
+                        item.time2 = Operation.GetTiming(operations[marks[j]].Complexity, agents[j].CpuFrequency);
+                        items[j] = item;
                         result.Add(new List<int>() { marks[j], j });
+                    }
+
                 return null;
             }
             catch(Exception ex)

@@ -1,14 +1,29 @@
-﻿using AssignmentProblem.Library;
+﻿using System;
+using AssignmentProblem.Library;
 
 namespace AssignmentProblem.ViewModels
 {
-    class OperationViewModel : ViewModelBase
+    public class OperationViewModel : ViewModelBase
     {
         public Operation Model { get; private set; }
         public OperationViewModel(Operation operation)
         {
             this.Model = operation;
         }
+
+        public Agent Agent
+        {
+            get { return agent; }
+            set
+            {
+                agent = value;
+                OnPropertyChanged("Agent");
+                Time = Operation.GetTiming(Complexity, Agent.CpuFrequency);
+            }
+        }
+        private Agent agent;
+
+        public TimeSpan Time { get; private set; }
 
         public int ID { get { return Model.ID; } }
 
