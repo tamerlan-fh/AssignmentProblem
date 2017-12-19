@@ -204,23 +204,23 @@ namespace AssignmentProblem.Managers
 
                 // Значения, вычитаемые из строк (u) и столбцов (v)
                 // VInt u(height, 0), v(width, 0);
-                var u = new long[height];
-                var v = new long[width];
+                var u = new long[rang];
+                var v = new long[rang];
 
                 // Индекс помеченной клетки в каждом столбце
-                var marks = new int[width];
-                for(int i = 0; i < width; i++)
+                var marks = new int[rang];
+                for(int i = 0; i < rang; i++)
                     marks[i] = -1;
 
                 // Будем добавлять строки матрицы одну за другой
                 int count = 0;
-                for(int i = 0; i < height; i++)
+                for(int i = 0; i < rang; i++)
                 {
                     var links = new List<int>();
                     var mins = new List<long>();
                     var visited = new List<long>();
 
-                    for(int a = 0; a < width; a++)
+                    for(int a = 0; a < rang; a++)
                     {
                         links.Add(-1);
                         mins.Add(long.MaxValue);
@@ -236,7 +236,7 @@ namespace AssignmentProblem.Managers
                         // Обновим информацию о минимумах в посещенных строках непосещенных столбцов
                         // Заодно поместим в j индекс непосещенного столбца с самым маленьким из них
                         j = -1;
-                        for(int j1 = 0; j1 < width; j1++)
+                        for(int j1 = 0; j1 < rang; j1++)
                             if(visited[j1] != 1)
                             {
                                 if(matrix[markedI, j1] - u[markedI] - v[j1] < mins[j1])
@@ -251,7 +251,7 @@ namespace AssignmentProblem.Managers
                         // Теперь нас интересует элемент с индексами (markIndices[links[j]], j)
                         // Произведем манипуляции со строками и столбцами так, чтобы он обнулился
                         var delta = mins[j];
-                        for(int j1 = 0; j1 < width; j1++)
+                        for(int j1 = 0; j1 < rang; j1++)
                             if(visited[j1] == 1)
                             {
                                 u[marks[j1]] += delta;
@@ -277,11 +277,9 @@ namespace AssignmentProblem.Managers
                     marks[j] = i;
                 }
 
-                var items = new dynamic[rang];
-
                 for(int j = 0; j < width; j++)
                 {
-                    if(marks[j] == -1 || marks[j] > height) continue;
+                    if(marks[j] == -1 || marks[j] >= height) continue;
 
                     assignment[agents[marks[j]]].Add(operations[j]);
                 }
